@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0A0A0C">
+<title>矛盾。 — プライバシーポリシー（開発者はあなたの答えを受け取りません）</title>
+<meta name="description" content="「矛盾。」のプライバシーポリシーです。答えた記録・バッジ・友達と遊んだ記録は、すべてこのスマホの中だけに保存されます。アプリは通信をしません。広告も外部の解析も、アカウント登録もありません。消し方も書いています。お問い合わせは nosunosukawa@gmail.com へ。">
+<meta property="og:title" content="矛盾。 — プライバシーポリシー">
+<meta property="og:description" content="答えた記録も、友達と遊んだ記録も、このスマホの中だけに残ります。アプリは通信をしません。開発者はあなたの答えを受け取りません。">
+<meta property="og:url" content="https://nosunosukawa.github.io/mujun-site/privacy.html">
+<meta property="og:type" content="website">
+<style>
+  /* 色の出典は Mujun/UI/Theme/Palette.swift と docs/DESIGN_SYSTEM.md だけ。ここで色を作らない。
+     アプリは Info.plist の UIUserInterfaceStyle = Dark でダーク固定なので、明暗2組は持たない。
+     読み手は中高生と保護者の方。本文17px・行間1.9・文字段は640px（日本語30字前後）。
+     角丸と余白はアプリの Radius / Space に合わせた。動きは1つも作らない。 */
+  :root{
+    color-scheme:dark;
+
+    --paper:      #0A0A0C;   /* Palette.background      画面の地 */
+    --sheet:      #16161C;   /* Palette.surface         カードの面 */
+    --sheet-lift: #1F1F27;   /* Palette.surfaceElevated 表のヘッダ */
+
+    --ink:        #F4F4F7;   /* Palette.textPrimary     本文 */
+    --ink-mut:    #9C9CA9;   /* Palette.textSecondary   日付・脚注 */
+    --ink-dim:    #64646F;   /* Palette.textTertiary    さらに弱い文字 */
+
+    --accent:     #A98BFA;   /* Palette.accentParadox   リンク・li::marker・focus */
+    --accent-soft:#1A1724;   /* mailbtn の地 */
+
+    --brand:      #FF3B47;   /* Palette.brand  ロゴの「。」だけ。リンクには使わない */
+
+    --rule:       rgba(255,255,255,.08);  /* Palette.stroke  装飾の罫だけ */
+    --line-strong:#64646F;                /* 操作部品とカードの輪郭。3:1 以上を満たす値を採る */
+
+    --r-card:22px; --r-btn:18px; --r-small:12px;   /* Radius */
+    --gutter:20px;                                  /* Space.gutter */
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;scroll-padding-top:24px}
+  body{touch-action:manipulation;-webkit-tap-highlight-color:rgba(169,139,250,.15);
+    background:var(--paper);color:var(--ink);
+    font-family:"Hiragino Sans","ヒラギノ角ゴシック","Hiragino Kaku Gothic ProN",
+                "Yu Gothic","YuGothic","Noto Sans JP",-apple-system,sans-serif;
+    font-size:17px;line-height:1.9;-webkit-font-smoothing:antialiased;
+    overflow-wrap:break-word}
+  .wrap{max-width:640px;margin:0 auto;padding:0 var(--gutter) 72px}
+
+  a{color:var(--accent);font-weight:700;
+    text-decoration:underline;text-decoration-color:currentColor;text-underline-offset:4px}
+  a:hover{text-decoration-thickness:2px}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+  .head{border-bottom:1px solid var(--rule)}
+  .head-in{max-width:640px;margin:0 auto;padding:0 var(--gutter);
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 20px}
+  .head-name{font-size:19px;font-weight:800;line-height:1.4}
+  .head-name a{display:inline-flex;align-items:center;min-height:48px}
+  .dot{color:var(--brand)}
+  .head-links{display:flex;gap:20px}
+  .head-links a{display:inline-flex;align-items:center;min-height:48px;font-size:17px}
+
+  header{margin:40px 0 28px}
+  h1{font-size:28px;text-wrap:balance;line-height:1.4;letter-spacing:-.01em;font-weight:800}
+  .lead{margin-top:16px;font-size:19px;line-height:1.8;font-weight:600}
+  .date{margin-top:12px;font-size:17px;color:var(--ink-mut)}
+
+  .card{background:var(--sheet);border:1px solid var(--line-strong);border-radius:var(--r-card);padding:20px}
+  .card + .card{margin-top:14px}
+  .card h2{font-size:22px;line-height:1.6;margin-bottom:8px;font-weight:800}
+  .card h3{font-size:18px;margin:16px 0 4px;font-weight:800}
+  .card p{font-size:17px}
+  .card p + p{margin-top:12px}
+  .card ul{padding-left:1.3em;margin-top:12px}
+  .card li{font-size:17px;margin-top:8px}
+  .card li::marker{color:var(--accent)}
+
+  /* 保存先の表。狭い画面では表だけが横に動く */
+  .tbl-wrap{overflow-x:auto;margin-top:12px}
+  table{border-collapse:collapse;width:100%;min-width:520px;font-size:16px;line-height:1.7}
+  th,td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  thead th{background:var(--sheet-lift)}
+
+  .mailbtn{display:flex;align-items:center;justify-content:center;text-align:center;
+    min-height:64px;margin-top:12px;padding:12px 14px;font-size:19px;font-weight:800;
+    overflow-wrap:anywhere;color:var(--accent);background:var(--accent-soft);
+    border:2px solid var(--line-strong);border-radius:var(--r-btn);text-underline-offset:4px}
+
+  footer{margin-top:56px;padding-top:12px;border-top:1px solid var(--rule);
+    text-align:center;color:var(--ink-mut);font-size:17px;line-height:2}
+  footer a{display:inline-flex;align-items:center;min-height:48px;padding:0 4px}
+  section[id],h2[id],h3[id]{scroll-margin-top:24px}
+</style>
+<link rel="canonical" href="https://nosunosukawa.github.io/mujun-site/privacy.html">
+</head>
+<body>
+
+<div class="head">
+  <div class="head-in">
+    <span class="head-name"><a href="index.html">矛盾<span class="dot">。</span></a></span>
+    <nav class="head-links" aria-label="ほかのページ">
+      <a href="index.html">最初のページ</a>
+      <a href="support.html">サポート</a>
+    </nav>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <header>
+    <h1>矛盾。 — プライバシーポリシー</h1>
+    <p class="lead">開発者は、あなたの答えを受け取りません。
+       答えた記録も、友達と遊んだ記録も、このスマホの中だけに残ります。</p>
+    <p class="date">最終更新（この版の適用日）: 2026年9月18日</p>
+  </header>
+
+  <div class="card">
+    <h2 id="collect">開発者が受け取るもの</h2>
+    <p>ありません。開発者のサーバーはありません。アプリには通信をするしくみが入っていないので、
+       あなたが答えたもの・書いた名前・端末の情報が、このiPhoneから外へ出ることはありません。</p>
+    <p>アカウント登録もログインもありません。アプリの最初の画面にも
+       「登録もログインもいりません。答えたものは、このスマホの中だけに残ります。」と書いてあります。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="never">アプリが求めない情報</h2>
+    <p>アプリは、次のものを一切求めず、集めず、送りません。</p>
+    <ul>
+      <li>氏名・本名</li>
+      <li>学校名・勤務先</li>
+      <li>電話番号・メールアドレス・住所</li>
+      <li>顔写真その他の画像</li>
+      <li>生年月日・年齢</li>
+      <li>位置情報</li>
+      <li>連絡先・カレンダー・写真ライブラリ</li>
+      <li>広告のための番号（広告識別子）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2 id="where">このスマホの中に保存されるもの</h2>
+    <p>次のものが、このiPhoneの中にだけ保存されます。置き場所は2か所で、どちらもこの端末の中です。
+       外へ送るしくみはありません。</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">保存されるもの</th><th scope="col">置き場所</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>答えた記録（どの問題か・選んだもの・答えた日時・その問題を答えた回数・相手が選んだもの・点数・合っていたかどうか（答え合わせのある問題だけ）・答えるのにかかった秒数）</td>
+            <td rowspan="7">このiPhoneの中の、アプリ専用の場所にある1つのファイル（Application Support の中の user-state.json）</td>
+          </tr>
+          <tr><td>お気に入りに入れた問題</td></tr>
+          <tr><td>XP と、手に入れたバッジ・手に入れた日</td></tr>
+          <tr><td>連続して遊んだ日数（いまの日数・いちばん長かった日数・最後に遊んだ日）</td></tr>
+          <tr>
+            <td>設定（触覚フィードバック、動く演出をへらすかどうか、ニックネーム、シェア画像に名前を入れるかどうか、解説を最初に開く長さ、通知を一度でも求めたかどうか、使い方の記録のオンオフ）</td>
+          </tr>
+          <tr><td>見つかった「あなたの矛盾」のカードと、あなたが消したカードの番号</td></tr>
+          <tr>
+            <td>今日のミッションの進み具合／最初の画面を終えたかどうか／その日に割り当てた「今日の問題」／いちばん新しい思考タイプの番号／共有した回数／同じスマホで友達と遊んだ記録（そのとき入力した2人の名前をふくみます）</td>
+          </tr>
+          <tr>
+            <td>問題ごとに、どの選択肢が何回選ばれたかという回数だけ（あなたの回答、友達と同じスマホで遊んだときの相手の回答、ともだちの画面で記録した友達の答え）</td>
+            <td>このiPhoneの中の、アプリごとの小さな保管場所（UserDefaults の choiceDistribution.v1）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>ファイルが読めなくなっていたときは、そのファイルを user-state.json.broken という名前でこの端末に残したまま、
+       アプリは初期状態で立ち上がります。原因を調べるためのもので、このファイルも端末の外には出ません。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="notsaved">保存しないもの（使い方の記録）</h2>
+    <p>設定の「使い方の記録」は、どの画面を開いたかを、この端末の中のログにだけ書くものです。
+       はじめの状態はオンです。アプリを使っているあいだ、直近200件までを一時的に覚えていますが、
+       ファイルにも保管場所にも書き込みません。アプリを終了すると消えます。</p>
+    <p>書き出す先は、この端末の中のログだけです。送り先はアプリの中に存在しません。
+       設定でオフにすると、書かなくなります。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="nickname">ニックネームについて</h2>
+    <p>設定でニックネーム（16文字まで）を入れられますが、これは書かなくてかまいません。
+       はじめの状態では空で、シェア画像にも本文にも入りません。</p>
+    <p>設定の「シェア画像にニックネームを入れる」を自分でオンにして、かつ名前を入れているときだけ、
+       あなたが作った画像に表示されます。ニックネームがアプリの外へ自動的に送られることはありません。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="friendname">友達と遊ぶときに入れる名前</h2>
+    <p>同じスマホを渡し合って2人で遊ぶときは、2人の名前を入れられます（入れなくても遊べます）。
+       アプリの画面にも「本名は書かないでね。ニックネームでOK。」と書いてあります。</p>
+    <p>ここに入れた名前は、対戦の記録としてこのスマホの中だけに残ります。外へは送りません。
+       共有する画像やリンクにも入りません。消したいときは、設定の「このスマホのデータを全部消す」で消せます。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="notify">通知について</h2>
+    <p>「今日の問題」のお知らせは、はじめの状態ではオフです。設定の「今日の問題のお知らせ」を
+       あなた自身がオンにしたときに、はじめてiPhoneが許可を聞いてきます。
+       アプリを開いたときや最初の画面では、許可を求めません。</p>
+    <p>届くのは毎日18時の1本だけです。何度オンにしても増えません。音は付けていません。
+       これはこの端末の中で予約されるお知らせで、開発者のサーバーからは何も送られません。</p>
+    <p>トグルをオフにすると、予約はその場ですべて取り消されます。
+       「このスマホのデータを全部消す」を実行したときも取り消されます。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="share">共有について</h2>
+    <p>問題や結果を友達へ送るときは、iOSの標準の共有画面が開きます。
+       どのアプリへ送るか、そもそも送るかどうかを決めるのはあなたです。
+       アプリが勝手に送信することはありません。渡せるのは、文章・リンク・画像（PNG）の3つです。</p>
+    <h3>画像に入るもの</h3>
+    <p>小さな見出し・問題のタイトル・ひとこと・大きな一行・補足の行（最大3行）・下のキャッチコピー・
+       「矛盾。」のロゴが入ります。ニックネームは、上に書いた設定をオンにしているときだけ入ります。</p>
+    <h3>入らないもの</h3>
+    <ul>
+      <li>友達に問題を送るときのカードには、<strong>あなたの答えは入りません</strong>。送るのは問題だけです。</li>
+      <li>同じスマホで遊んだ結果を共有するときも、入力した2人の名前は共有するものに入りません。</li>
+    </ul>
+    <h3>リンクについて</h3>
+    <p>共有に付くリンクは、<code>paradox://</code> または <code>mujun://</code> ではじまる、このアプリ専用の形です。
+       中身は問題の番号だけで、あなたの答えは入りません。
+       このアプリを入れていない端末では、このリンクは開きません。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="permission">アプリが求める許可</h2>
+    <p>アプリがiPhoneに求める許可は、上に書いた<strong>通知の1つだけ</strong>です。
+       カメラ・写真・位置情報・連絡先・マイク・カレンダーは求めません。
+       これらを求めるための説明文をアプリに1つも書いていないため、求めることができません。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="third">第三者への提供・広告・解析</h2>
+    <ul>
+      <li>第三者への提供はありません。</li>
+      <li>広告は表示しません。広告のしくみ（広告SDK）を組み込んでいません。</li>
+      <li>外部の解析サービスを組み込んでいません。</li>
+      <li>アプリはネットワーク通信を行いません。通信をするコードが1行も入っていません。</li>
+      <li>ほかの会社が作った部品（外部ライブラリ）を1つも使っていません。</li>
+      <li>アプリの中に購入はありません。ランキングもありません。</li>
+    </ul>
+    <p>このウェブページ（アプリではありません）にも、訪問数を数える仕組みは入れていません。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="delete">記録の消し方</h2>
+    <p>アプリの「設定」→「データ」→ <strong>「このスマホのデータを全部消す」</strong>を押します。
+       確認の画面が出て、「全部消す」を選ぶと消えます。</p>
+    <p>消えるのは、答えた記録・XP・連続日数・バッジ・お気に入り・友達との対戦の記録です。
+       選択肢が選ばれた回数の記録も、予約してあるお知らせも、あわせて消えます。もとには戻せません。</p>
+    <p>アプリ自体を削除したときも、保存先ごと消えます。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="kids">子どもの利用について</h2>
+    <p>このアプリは中学生・高校生が使うことを想定しています。
+       そのため、個人を特定できる情報を最初から求めない作りにしています。
+       保護者の方からのお問い合わせも、下のメールアドレスで受け付けます。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="notdiagnosis">画面に出る「思考タイプ」や数字について</h2>
+    <p>アプリに出る「思考タイプ」「選び方の傾向」「割合」は、
+       アプリの中での選び方から作った、ゲーム上の表示です。
+       アプリの中にも、次の一文が必ず添えてあります。</p>
+    <p><strong>「これは心理学的・医学的な診断ではありません。このアプリでの選び方から作った、ゲーム上のタイプです。」</strong></p>
+    <p>知能や能力を測るものでもありません。進路・健康・法律・お金の判断には使わないでください。</p>
+    <h3>数字の出どころ</h3>
+    <ul>
+      <li>問題ごとの選ばれ方は、<strong>この端末で実際に行われた回答だけ</strong>を数えています。よその人数は入っていません。画面には「このスマホでの回答」という出どころが必ず添えてあります。</li>
+      <li>同じ問題に4件たまるまで、割合は出ません。それまでは件数だけを出します。</li>
+      <li>選び方の傾向の割合は、5件たまるまで数字を出しません。</li>
+      <li>思考タイプは、8問以上答えるまで出ません。</li>
+      <li>バッジは順位づけではありません。画面にも「だれかと競うためのものではありません。」と書いてあります。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2 id="change">変更について</h2>
+    <p>このポリシーを変更する場合は、このページを新しい日付で更新します。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="contact">お問い合わせ</h2>
+    <p>このポリシーについてのご質問は、こちらへお送りください。
+       開発者は記録を受け取れないため、答えた内容や画面の写しをお送りいただいても、
+       こちらから中身を確かめることはできません。</p>
+    <a class="mailbtn" href="mailto:nosunosukawa@gmail.com">nosunosukawa@gmail.com</a>
+  </div>
+
+</main>
+
+<footer class="wrap">
+  矛盾。 ／ © 2026 川﨑信隆<br>
+  <a href="https://nosunosukawa.github.io/mujun-site/">最初のページ</a> ·
+  <a href="https://nosunosukawa.github.io/mujun-site/support.html">サポート</a> ·
+  <a href="mailto:nosunosukawa@gmail.com">nosunosukawa@gmail.com</a>
+</footer>
+
+</body>
+</html>

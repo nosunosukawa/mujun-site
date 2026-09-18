@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0A0A0C">
+<!-- <title> を「Home」や「矛盾。」だけにしない。AI の引用面にも検索にも載らなくなる（他アプリで実測） -->
+<title>矛盾。— 正解のない選択で友達と答えが割れる思考ゲーム（iPhoneアプリ）</title>
+<meta name="description" content="矛盾。は、正解のない問題に直感で答えるiPhoneのアプリです。答えたあとに、なぜそうなるのかの説明が出ます。同じ問題を友達に送って、答えの割れ方を見ることもできます。全100問。登録もログインもいりません。通信をしないので、答えたものはこのスマホの中だけに残ります。広告はありません。お問い合わせは nosunosukawa@gmail.com。">
+<meta property="og:title" content="矛盾。— 正解のない選択で友達と答えが割れる思考ゲーム">
+<meta property="og:description" content="正解のない問題に、直感で答えるだけ。答えたあとに「え、そうなるの？」があります。同じ問題を友達に送ると、だいたい答えが割れます。全100問・iPhoneアプリ。">
+<meta property="og:url" content="https://nosunosukawa.github.io/mujun-site/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://nosunosukawa.github.io/mujun-site/assets/shot-01-today.png">
+<link rel="canonical" href="https://nosunosukawa.github.io/mujun-site/">
+<style>
+  /* ============================================================
+     矛盾。LP（2026-09-18）
+
+     色の出典は Mujun/UI/Theme/Palette.swift だけ。画面から目分量で採っていない。
+     角丸と余白の出典は Mujun/UI/Theme/Layout.swift（Radius / Space）。
+
+     アプリは Info.plist の UIUserInterfaceStyle = Dark でダーク固定。
+     だからこのページも明暗2組を持たない。持つとアプリと食い違う。
+
+     赤 #FF3B47（Palette.brand）は、ロゴの「。」以外に使わない。
+     Palette.swift に「ロゴの『。』と、最重要CTAだけに使う」と書いてある。
+     リンク・li::marker・focus は紫 #A98BFA（Palette.accentParadox、地に対して 7.3:1）。
+
+     動きは1つも作らない。@keyframes も transition も無い。
+     ============================================================ */
+  :root{
+    color-scheme:dark;                 /* アプリが Dark 固定。light dark にしない */
+
+    --paper:      #0A0A0C;             /* Palette.background      画面の地 */
+    --paper-lift: #101014;             /* Palette.backgroundLift  */
+    --sheet:      #16161C;             /* Palette.surface         カードの面 */
+    --sheet-lift: #1F1F27;             /* Palette.surfaceElevated 表のヘッダ・小さな面 */
+
+    --ink:        #F4F4F7;             /* Palette.textPrimary     本文        16.9:1 */
+    --ink-mut:    #9C9CA9;             /* Palette.textSecondary   日付・脚注    7.0:1 */
+    --ink-dim:    #64646F;             /* Palette.textTertiary    罫と補助      3.4:1 */
+
+    --accent:     #A98BFA;             /* Palette.accentParadox   リンク       7.3:1 */
+    --accent-soft:#1A1724;             /* 紫を地に約10%。mailbtn の地 */
+
+    --brand:      #FF3B47;             /* Palette.brand           ロゴの「。」だけ */
+
+    --rule:       rgba(255,255,255,.08);  /* Palette.stroke  装飾の罫だけ。意味を持たせない */
+    --line-strong:#64646F;                /* 操作部品とカードの輪郭。3:1 以上を満たす値を選んだ。
+                                             Palette.strokeStrong（white 16%）はこの地の上で約1.5:1
+                                             にしかならないため、Palette.textTertiary の実値を使う */
+
+    /* §50 カテゴリの5色（Palette.accent*） */
+    --cat-game:  #E8B44A;   /* GAME THEORY  かけひき   */
+    --cat-para:  #A98BFA;   /* PARADOX      パラドックス */
+    --cat-logic: #5AC8F5;   /* LOGIC        ろんり     */
+    --cat-psy:   #F07E97;   /* PSYCHOLOGY   こころ     */
+    --cat-eth:   #5CD6A9;   /* ETHICS       えらび方   */
+
+    --r-card:22px;          /* Radius.card   */
+    --r-btn:18px;           /* Radius.button */
+    --r-small:12px;         /* Radius.small  */
+    --gutter:20px;          /* Space の左右ガター */
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;scroll-padding-top:24px}
+  body{
+    touch-action:manipulation;-webkit-tap-highlight-color:rgba(169,139,250,.15);
+    background:var(--paper);color:var(--ink);
+    font-family:"Hiragino Sans","ヒラギノ角ゴシック","Hiragino Kaku Gothic ProN",
+                "Yu Gothic","YuGothic","Noto Sans JP",-apple-system,sans-serif;
+    font-size:17px;line-height:1.9;
+    -webkit-font-smoothing:antialiased;overflow-wrap:break-word;
+  }
+
+  a{color:var(--accent);font-weight:700;
+    text-decoration:underline;text-decoration-color:currentColor;text-underline-offset:4px}
+  a:hover{text-decoration-thickness:2px}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+  /* ---- 帯: 細い罫1本だけ ---- */
+  .head{border-bottom:1px solid var(--rule)}
+  .head-in{max-width:640px;margin:0 auto;padding:0 16px;
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 20px}
+  .head-name{font-size:19px;font-weight:800;line-height:1.4;padding:10px 0}
+  .head-links{display:flex;gap:18px}
+  .head-links a{display:inline-flex;align-items:center;min-height:48px;font-size:17px}
+
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px 72px}  /* 文字段。日本語30字を超えさせない */
+
+  /* ---- ロゴの「。」だけが赤 ---- */
+  .dot{color:var(--brand)}
+
+  header{padding:40px 0 4px}
+  /* 見出しを語の途中で折らない。対応していないブラウザは無視するだけ（従来どおりの折り返しになる） */
+  h1,h2,h3,.lead{word-break:auto-phrase}
+  h1{font-size:30px;text-wrap:balance;line-height:1.4;font-weight:800;letter-spacing:-.01em}
+  .lead{font-size:19px;line-height:1.8;font-weight:600;margin-top:16px}
+  .date{font-size:17px;color:var(--ink-mut);margin-top:16px}
+  @media (min-width:760px){ h1{font-size:38px} }
+
+  /* ---- 1トピック＝1カード。これを縦に積むだけ ---- */
+  .card{background:var(--sheet);border:1px solid var(--line-strong);border-radius:var(--r-card);
+    padding:var(--gutter);margin-top:28px}
+  .card + .card{margin-top:14px}
+  h2{font-size:22px;text-wrap:balance;line-height:1.6;font-weight:800}
+  h3{font-size:18px;font-weight:800;margin:16px 0 4px}
+  p{margin-top:12px}
+  h2 + p,h3 + p{margin-top:8px}
+  .mut{color:var(--ink-mut)}
+  .small{font-size:15px;line-height:1.8;color:var(--ink-mut)}
+  section[id],h2[id],h3[id]{scroll-margin-top:24px}
+
+  ul{margin:12px 0 0 1.4em}
+  li{margin-top:8px}
+  li::marker{color:var(--accent)}
+
+  /* ---- 英字カテゴリラベル。アプリの Typo.label（monospaced heavy / tracking 1.6 / uppercase） ---- */
+  .cat{font-family:ui-monospace,Menlo,"SF Mono",monospace;font-size:11px;font-weight:800;
+    letter-spacing:.16em;text-transform:uppercase}
+
+  .cats{list-style:none;margin:16px 0 0}
+  .cats li{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;
+    border-top:1px solid var(--rule);padding:12px 0;margin:0}
+  .cats li:first-child{border-top:0;padding-top:4px}
+  .cats .cat{min-width:8.6em}
+  .cats .jp{font-weight:800}
+  .cats .nature{color:var(--ink-mut);font-size:15px;width:100%}
+  .c-game{color:var(--cat-game)} .c-para{color:var(--cat-para)} .c-logic{color:var(--cat-logic)}
+  .c-psy{color:var(--cat-psy)}   .c-eth{color:var(--cat-eth)}
+
+  /* ---- スクリーンショット ---- */
+  figure{margin:20px 0 0}
+  .shot{display:block;width:100%;max-width:240px;height:auto;margin:0 auto;
+    border:1px solid var(--line-strong);border-radius:var(--r-card);background:var(--paper)}
+  figcaption{margin-top:12px;font-size:15px;line-height:1.8;color:var(--ink-mut)}
+
+  /* ---- 押せない告知。ボタンの形にしない（押しても何も起きないものは置かない） ---- */
+  .soon{margin-top:20px;padding:16px var(--gutter);border-radius:var(--r-small);
+    border:1px dashed var(--line-strong);background:var(--paper-lift);
+    color:var(--ink-mut);font-weight:700;text-align:center}
+
+  /* ---- このアプリがしないこと ---- */
+  .notice{border:2px solid var(--accent);background:var(--accent-soft);border-radius:var(--r-card);
+    padding:var(--gutter);margin-top:28px}
+  .notice ul{list-style:none;margin:12px 0 0}
+  .notice li{display:flex;gap:10px;align-items:flex-start;margin-top:12px}
+  .notice li::before{content:"×";flex:none;color:var(--accent);font-weight:800;line-height:1.9}
+
+  /* ---- メールのボタン ---- */
+  .mailbtn{display:flex;align-items:center;justify-content:center;text-align:center;
+    min-height:62px;margin-top:16px;padding:12px 16px;border-radius:var(--r-btn);
+    font-size:18px;font-weight:800;line-height:1.5;overflow-wrap:anywhere;
+    color:var(--accent);background:var(--accent-soft);border:2px solid var(--accent);
+    text-decoration:underline;text-underline-offset:4px}
+
+  .pagebtn{display:flex;align-items:center;justify-content:center;text-align:center;
+    min-height:62px;margin-top:14px;padding:12px 16px;border-radius:var(--r-btn);
+    font-size:18px;font-weight:800;line-height:1.5;
+    color:var(--ink);background:var(--sheet-lift);border:2px solid var(--line-strong);
+    text-decoration:underline;text-underline-offset:4px}
+
+  footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--rule);
+    text-align:center;color:var(--ink-mut);font-size:15px;line-height:1.9}
+  footer a{display:inline-flex;align-items:center;min-height:48px;padding:0 4px}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="head-in">
+    <span class="head-name">矛盾<span class="dot">。</span></span>
+    <nav class="head-links" aria-label="ほかのページ">
+      <a href="support.html">サポート</a>
+      <a href="privacy.html">プライバシー</a>
+    </nav>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <header>
+    <h1>矛盾<span class="dot">。</span><br>正解のない選択で友達と答えが割れる思考ゲーム</h1>
+    <p class="lead">正解のない問題に、直感で答えるだけ。<br>答えたあとに「え、そうなるの？」があります。</p>
+    <p class="date">最終更新: 2026年9月18日</p>
+    <p class="soon">iPhone のアプリです。まもなく App Store で公開します</p>
+  </header>
+
+  <div class="card">
+    <h2 id="what">たとえば、こんな問題です</h2>
+    <p>「あと二人で自分の番。そこに走ってきた人。」<br>
+       先に通すのは、優しさか、ずるか。</p>
+    <p>選択肢は2つか3つ（まれに4つ）です。考え込む前に、思ったほうを押してください。
+       押すまで、こちらからは何も言いません。
+       どちらが多いかも、どんな話につながるかも、先に見せません。</p>
+    <figure>
+      <img class="shot" src="assets/shot-01-today.png" width="660" height="1434"
+           alt="矛盾。のホーム画面。左上にアプリ名「矛盾。」、右上に「1 日つづけて」の表示と設定の歯車があります。画面の大半を占めるカードには、左に「TODAY'S PARADOX」、右に「ETHICS」の札。問題文は大きな字で「あと二人で自分の番。そこに走ってきた人。」、そのすぐ下に小さく「先に通すのは、優しさか、ずるか。」。カードの下の行に「45秒」と「考え方が分かれます」。その下に緑色の大きなボタンで「直感で答える」。カードの外には赤いボタンで「友達を試す」があり、その下に「あなたなら通すと思う。私は通せなかった。」の文。さらに下に「ほかの遊び方」の見出し。画面のいちばん下には、今日・あそぶ・ともだち・じぶん、の4つのタブが並んでいます。">
+      <figcaption>最初の画面。毎日、その日の1問が出ます。月曜から金曜は日ごとに種類が変わり、土曜と日曜は種類を決めずに選ばれます。一度出た問題は、答えたあともその日は入れ替わりません。</figcaption>
+    </figure>
+  </div>
+
+  <div class="card">
+    <h2 id="after">答えたあとが本番です</h2>
+    <p>選んだ瞬間に、結果が出ます。
+       あなたの出来ばえを採点したものではありません。
+       「言われてみればそうだけど、気づかなかった」が出てきます。</p>
+    <p>納得できなければ「なんで？」を押してください。
+       説明は3つの深さから選べます。<br>
+       「30秒でわかる」「もう少し知る」「ガチで知る」。
+       読んでいる途中でも、いつでも切り替えられます。</p>
+    <p>それでも納得できなければ、AIに言い返せます。
+       「もっと簡単に」「逆の立場なら？」「この考え方の弱点は？」といったボタンで話が進みます。
+       答えを決める先生ではなく、一緒に考える相手として作りました。
+       この会話も通信を使いません。機内モードのままで最後まで話せます。</p>
+    <figure>
+      <img class="shot" src="assets/shot-02-result.png" width="660" height="1434"
+           alt="答えたあとの結果画面。上に「ETHICS」の札と「考え方が分かれます」、その下に問題文「あと二人で自分の番。そこに走ってきた人。」と、あなたの選択として「先に通す」が表示されています。大きな見出しは「困っている人は助かる。並んだ意味は少し薄くなる。」。その下に「くわしく」と「ちなみに、逆を選んだ人は…」という開いて読めるボタンが2つ。さらに下の枠には「どちらが正しいかは、ここでは決めません。」「どれが正しいかは、この問題では決められません。列は公平のための道具ですが、道具は場面によって合わなくなります。」。次の枠は「ここがポイント」として「先着順は事情を聞かないから公平です。事情を聞かないから、助けそこねることもあります。」。いちばん下の枠は見出しが「選び方は、こう割れました。」で、その下に「このスマホでの回答：31件」と書かれ、先に通す61パーセント、順番どおりにする26パーセント、という棒グラフが並んでいます。">
+      <figcaption>この画面に出ている割合は、このスマホで実際に選ばれた回数だけから出しています。ほかの人の集計は入っていません。同じ問題に4件たまるまでは割合を出さず、件数だけを表示します。</figcaption>
+    </figure>
+  </div>
+
+  <div class="card">
+    <h2 id="friends">友達に送ると、割れます</h2>
+    <p>今日の問題を、そのまま友達に送れます。
+       送るのは問題だけです。あなたがどちらを選んだかは入りません。何人にでも送れます。</p>
+    <p>返ってきた答えを押して記録すると、割れ方が見えてきます。
+       ここに出る割合も、このスマホで記録したぶんだけです。</p>
+    <p>1台のスマホを交互に渡して、2人で遊ぶこともできます。
+       名前（入れなくてもかまいません）と問題数（1問・3問・5問）とカテゴリを選び、
+       互いの答えを隠して選んで、最後にせーので公開します。</p>
+    <p class="small">離れた友達とオンラインでつなぐ機能はありません。</p>
+    <figure>
+      <img class="shot" src="assets/shot-03-friends.png" width="660" height="1434"
+           alt="ともだちの画面。上に小さく「ともだち」、大きな見出しで「友達を試す。」、その下に「同じ問題を5人に送って、返ってきた答えをこのスマホに記録する。たまると、答えの割れ方が出ます。」。枠の中は3段になっていて、1「送る問題をえらぶ」の下に ETHICS の札と問題文「あと二人で自分の番。そこに走ってきた人。」、右に「別の問題にする」。2「友達に送る」の下に赤い大きなボタンで「友達を試す」、そのすぐ下に小さく「送るのは問題だけ。あなたの答えは入りません。何人にでも送れます。」。3「返ってきた答えを記録する」の下に「答えが返ってきた」のボタン。いちばん下には「このスマホでの回答」として、先に通す59パーセント、順番どおりにする27パーセント、自分が後ろに回る14パーセント、の3本の棒が並び、その下に「このスマホでの回答 37件から。ほかの人の集計は入っていません。」と書かれています。画面のいちばん下には、今日・あそぶ・ともだち・じぶん、の4つのタブ。">
+      <figcaption>友達に送るときのカードには、あなたの答えは載りません。2人で遊んだときに入れた名前も、共有する画像やリンクには出ません。</figcaption>
+    </figure>
+  </div>
+
+  <div class="card">
+    <h2 id="contradiction">あなたの中の矛盾</h2>
+    <p>ある問題では「公平がいい」と答えたのに、
+       別の問題では「自分が得するほう」を選んでいた。
+       そういう食い違いを見つけて、カードにします。</p>
+    <p>責めません。言い当てようともしません。
+       人の決め方には、こういうことがよく起こります。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="problems">全100問</h2>
+    <p>5つの種類が、ちょうど20問ずつあります。</p>
+    <ul class="cats">
+      <li><span class="cat c-game">Game Theory</span><span class="jp">かけひき</span>
+          <span class="nature">相手の出方で結果が変わります</span></li>
+      <li><span class="cat c-para">Paradox</span><span class="jp">パラドックス</span>
+          <span class="nature">答えが揺れます</span></li>
+      <li><span class="cat c-logic">Logic</span><span class="jp">ろんり</span>
+          <span class="nature">答えがあります。この種類だけ、合っているかどうかが決まります</span></li>
+      <li><span class="cat c-psy">Psychology</span><span class="jp">こころ</span>
+          <span class="nature">傾向が出ます</span></li>
+      <li><span class="cat c-eth">Ethics</span><span class="jp">えらび方</span>
+          <span class="nature">考え方が分かれます</span></li>
+    </ul>
+    <p>言葉で探す、種類で探す、タグで探す、むずかしさで探す、お気に入りから探す。
+       どれでも選べます。
+       すぐ始めたいときは、ランダムで1問、60秒で3問、続けて5問、の3つの入口があります。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="profile">自分の選び方を、あとから見られます</h2>
+    <p>協力するほうを選びやすいか、リスクを取るほうか、といった傾向が出ます。
+       ただし、その傾向にあたる問題を5問答えるまでは、数字を出しません。
+       画面には「まだ数字は出せません」「あと◯問で出ます」と表示されます。</p>
+    <p>8問以上答えると「思考タイプ」が出ます。全部で10種類あります。</p>
+    <p class="small">この「思考タイプ」は、心理学的・医学的な診断ではありません。
+       このアプリでの選び方から作った、ゲーム上のタイプです。
+       アプリの画面にも同じ注記が出ます。</p>
+    <p>バッジは24種類あります。解いた数や選び方から自動でつきます。
+       だれかと競うためのものではありません。順位も、ランキングもありません。</p>
+  </div>
+
+  <div class="notice">
+    <h2 id="never">このアプリがしないこと</h2>
+    <ul>
+      <li>氏名や学校名を聞きません。カメラ・写真・位置情報・連絡先・マイク・カレンダーのどれも使いません。これらの許可を求める画面は出ません。</li>
+      <li>通信をしません。実装を調べて、通信するコードが1行も入っていないことを確かめています。答えたものは、このスマホの中だけに残ります。</li>
+      <li>広告を出しません。アプリの中に購入もありません。</li>
+      <li>頭の良さを点数にしません。「あなたは◯◯な人です」と決めつけることもしません。</li>
+    </ul>
+    <p class="small">端末の中に何が残るのか、どうすれば消せるのかは、
+       <a href="privacy.html">プライバシーポリシー</a>に全部書いています。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="family">保護者の方・先生方へ</h2>
+    <p>これは、成績のつくものではありません。
+       答えて、驚いて、友達と言い合うためのものです。
+       宿題にも、テストにもなりません。</p>
+    <p>登録もログインもいりません。年齢も、メールアドレスも聞きません。
+       答えたものは、このスマホの中だけに残ります。外へは出ていきません。</p>
+    <p>お知らせ（この端末の中で予約するお知らせ）は、はじめは切ってあります。
+       設定で自分で入れたときだけ、毎日18時に1本だけ届きます。音は鳴りません。
+       切りたくなったら、設定で戻すだけです。</p>
+    <p>保存されたものは、設定の「このスマホのデータを全部消す」でまとめて消せます。
+       アプリを消したときも、一緒に消えます。</p>
+    <p>気になることがあれば、直接お問い合わせください。</p>
+    <a class="mailbtn" href="mailto:nosunosukawa@gmail.com">nosunosukawa@gmail.com</a>
+  </div>
+
+  <div class="card">
+    <h2 id="links">くわしいことは、こちらに書いています</h2>
+    <p>使い方とよくあるご質問、それから、端末に何が残るのかの説明です。</p>
+    <a class="pagebtn" href="support.html">くわしい説明とよくあるご質問</a>
+    <a class="pagebtn" href="privacy.html">プライバシーポリシー</a>
+  </div>
+
+  <div class="card">
+    <h2 id="contact">お問い合わせ</h2>
+    <p>開発元は のす工房（Nosu Works）です。
+       ご質問・ご要望・うまく動かないときのご連絡は、こちらへお願いします。
+       開発者が読んで、返事をします。</p>
+    <a class="mailbtn" href="mailto:nosunosukawa@gmail.com">nosunosukawa@gmail.com</a>
+  </div>
+
+  <footer>
+    矛盾<span class="dot">。</span> ／ 川﨑信隆<br>
+    <a href="support.html">サポート</a>・<a href="privacy.html">プライバシー</a><br>
+    © 2026 川﨑信隆
+  </footer>
+
+</main>
+
+</body>
+</html>

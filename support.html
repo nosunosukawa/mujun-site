@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0A0A0C">
+<title>矛盾。 のくわしい説明とよくあるご質問 — はじめかた・画面に出る数字の見かた・通知とデータの消しかた</title>
+<meta name="description" content="iPhoneアプリ「矛盾。」のサポートページです。はじめかた、通信をしないこと、画面に出る割合の見かた、思考タイプに付く注記、友達との遊び方、通知の止めかた、このスマホのデータの消しかた、うまく動かないときの知らせかたをまとめました。保護者の方へのご説明もあります。お問い合わせは nosunosukawa@gmail.com へ。">
+<meta property="og:title" content="矛盾。 — くわしい説明とよくあるご質問">
+<meta property="og:description" content="答えた記録はこのスマホの中だけに残ります。登録もログインもいりません。使いかた・通知・データの消しかた・不具合のお知らせのしかたを説明します。">
+<meta property="og:url" content="https://nosunosukawa.github.io/mujun-site/support.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://nosunosukawa.github.io/mujun-site/support.html">
+<style>
+  /* 見た目の出どころ:
+     色は Mujun/UI/Theme/Palette.swift と docs/DESIGN_SYSTEM.md だけから採っています。
+     アプリは Info.plist の UIUserInterfaceStyle = Dark でダーク固定なので、
+     このページも明暗の2組は持たせず、暗い側だけを書きます。
+     赤(--brand)はロゴの「。」だけに使い、リンクと枠には紫(--accent)を使います
+     （DESIGN_SYSTEM.md の「brand は使いすぎない」に合わせるため）。 */
+  :root{
+    color-scheme: dark;
+
+    --paper:      #0A0A0C;   /* Palette.background      画面の地 */
+    --paper-lift: #101014;   /* Palette.backgroundLift  帯の切り替え */
+    --sheet:      #16161C;   /* Palette.surface         カードの面 */
+    --sheet-lift: #1F1F27;   /* Palette.surfaceElevated 表のヘッダ */
+
+    --ink:        #F4F4F7;   /* Palette.textPrimary     本文 */
+    --ink-mut:    #9C9CA9;   /* Palette.textSecondary   日付・脚注 */
+    --ink-dim:    #64646F;   /* Palette.textTertiary    さらに弱い文字 */
+
+    --accent:     #A98BFA;   /* Palette.accentParadox   リンク・li::marker・focus */
+    --accent-soft:#1A1724;   /* mailbtn の地 */
+
+    --brand:      #FF3B47;   /* Palette.brand           ロゴの「。」だけ */
+
+    --rule:       rgba(255,255,255,.08);  /* Palette.stroke 装飾の罫だけ */
+    --line-strong:#64646F;                /* カード枠・操作部品の輪郭（3.4:1） */
+
+    --r-card: 22px;  /* Radius.card */
+    --r-btn:  18px;  /* Radius.button */
+    --r-small:12px;  /* Radius.small */
+    --gutter: 20px;  /* Space.gutter */
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;scroll-padding-top:24px}
+  body{touch-action:manipulation;-webkit-tap-highlight-color:rgba(169,139,250,.15);
+    background:var(--paper);color:var(--ink);
+    font-family:"Hiragino Sans","ヒラギノ角ゴシック","Hiragino Kaku Gothic ProN",
+                "Yu Gothic","YuGothic","Noto Sans JP",-apple-system,sans-serif;
+    font-size:17px;line-height:1.9;-webkit-font-smoothing:antialiased;
+    overflow-wrap:break-word}
+  .wrap{max-width:640px;margin:0 auto;padding:0 var(--gutter) 72px}
+
+  a{color:var(--accent);font-weight:700;
+    text-decoration:underline;text-decoration-color:currentColor;text-underline-offset:4px}
+  a:hover{text-decoration-thickness:2px}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+  .head{border-bottom:1px solid var(--rule);background:var(--paper-lift)}
+  .head-in{max-width:640px;margin:0 auto;padding:0 var(--gutter);
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 20px}
+  .head-name{font-size:19px;font-weight:800;line-height:1.4}
+  .head-name a{display:inline-flex;align-items:center;min-height:48px;
+    color:var(--ink);text-decoration:none}
+  .dot{color:var(--brand)}
+  .head-links{display:flex;gap:18px}
+  .head-links a{display:inline-flex;align-items:center;min-height:48px;font-size:17px}
+
+  header{margin:36px 0 22px}
+  h1{font-size:28px;text-wrap:balance;line-height:1.4;font-weight:800}
+  .lead{margin-top:14px;font-size:19px;line-height:1.8;font-weight:600}
+  .date{margin-top:10px;font-size:17px;color:var(--ink-mut)}
+
+  /* 英字のカテゴリ名だけ、アプリの Typo.label（monospaced heavy / tracking 1.6 / uppercase）に合わせる */
+  .cat{font-family:ui-monospace,Menlo,"SF Mono",monospace;font-size:11px;font-weight:800;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mut)}
+
+  .card{background:var(--sheet);border:1px solid var(--line-strong);
+    border-radius:var(--r-card);padding:20px}
+  .card + .card{margin-top:14px}
+  .card h2{font-size:22px;line-height:1.6;font-weight:800;margin-bottom:6px}
+  .card h3{font-size:18px;line-height:1.6;font-weight:800;margin:16px 0 4px}
+  .card p + p{margin-top:12px}
+  .card ul,.card ol{padding-left:1.3em;margin-top:12px}
+  .card li{margin-top:8px}
+  .card li::marker{color:var(--accent)}
+  .note{margin-top:12px;color:var(--ink-mut);font-size:16px}
+
+  .toc ul{padding-left:1.3em}
+  .toc li{margin-top:0}
+  .toc a{display:inline-flex;align-items:center;min-height:44px}
+
+  .tbl-wrap{overflow-x:auto;margin-top:12px}
+  table{border-collapse:collapse;width:100%;min-width:520px;font-size:16px;line-height:1.7}
+  th,td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  thead th{background:var(--sheet-lift)}
+
+  .mailbtn{display:flex;align-items:center;justify-content:center;text-align:center;
+    min-height:64px;margin-top:14px;padding:12px 14px;font-size:19px;font-weight:800;
+    overflow-wrap:anywhere;color:var(--accent);background:var(--accent-soft);
+    border:2px solid var(--line-strong);border-radius:var(--r-btn);text-underline-offset:4px}
+
+  footer{margin-top:56px;padding-top:12px;border-top:1px solid var(--rule);
+    text-align:center;color:var(--ink-mut);line-height:2}
+  footer a{display:inline-flex;align-items:center;min-height:48px;padding:0 4px}
+
+  section[id],h2[id],h3[id],div[id]{scroll-margin-top:24px}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="head-in">
+    <span class="head-name"><a href="index.html">矛盾<span class="dot">。</span></a></span>
+    <nav class="head-links" aria-label="ほかのページ">
+      <a href="index.html">最初のページ</a>
+      <a href="privacy.html">プライバシー</a>
+    </nav>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <header>
+    <h1>矛盾<span class="dot">。</span> — サポート</h1>
+    <p class="lead">このページは、アプリ「矛盾。」の使いかたと、よく来るご質問への答えをまとめたところです。
+       ここで解決しないときは、ページの下のメールでお知らせください。</p>
+    <p class="date">最終更新（この版の適用日）: 2026年9月18日</p>
+  </header>
+
+  <div class="card toc">
+    <h2 id="toc">このページの中身</h2>
+    <ul>
+      <li><a href="#start">はじめかた</a></li>
+      <li><a href="#tsushin">通信と、聞かれること</a></li>
+      <li><a href="#suji">画面に出る数字の見かた</a></li>
+      <li><a href="#tomodachi">友達との遊びかた</a></li>
+      <li><a href="#tsuchi">通知のこと</a></li>
+      <li><a href="#data">記録の置き場所と、消しかた</a></li>
+      <li><a href="#okane">広告と購入のこと</a></li>
+      <li><a href="#mondai">問題の中身について</a></li>
+      <li><a href="#fuguai">うまく動かないときの知らせかた</a></li>
+      <li><a href="#toiawase">お問い合わせ</a></li>
+      <li><a href="#hogosha">保護者の方へ</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2 id="start">はじめかた</h2>
+    <p>アプリを開くと、最初に出るのは「正解のない問題、好き？」の1画面だけです。
+       「YES」と「わからない」のどちらを押しても、そのまま1問目に入ります。
+       説明を読む時間はいりません。</p>
+    <p>登録もログインもいりません。答えたものは、このスマホの中だけに残ります。</p>
+
+    <h3>画面の下にある4つのタブ</h3>
+    <ul>
+      <li><strong>今日</strong> ―― その日の1問が大きく出ます。日づけが変わると、新しい1問になります。</li>
+      <li><strong>あそぶ</strong> ―― 全部で100問の中から探せます。ことばで検索・5つの種類別・タグ・むずかしさ・お気に入りで絞れます。</li>
+      <li><strong>ともだち</strong> ―― 今日の問題を友達に送ったり、返ってきた答えを記録したりします。</li>
+      <li><strong>じぶん</strong> ―― これまでの選び方、見つかった食い違い、バッジ、履歴が見られます。</li>
+    </ul>
+
+    <h3>すぐ始めたいとき</h3>
+    <p>「あそぶ」の上に3つの入口があります。<strong>ランダム</strong>は1問だけ。
+       <strong>60秒</strong>は3問を60秒で。<strong>5問</strong>は続けて5問です。</p>
+
+    <h3>解説の長さは3つから選べます</h3>
+    <p>問題に答えたあと、「30秒でわかる」「もう少し知る」「ガチで知る」を画面の上でいつでも切り替えられます。
+       最初に開く長さは、設定の「解説」で変えられます。</p>
+
+    <h3>設定はどこにありますか</h3>
+    <p>「今日」の画面の右上にある歯車、または「じぶん」の中の「設定」から開きます。</p>
+
+    <h3>どの iPhone で使えますか</h3>
+    <p>iOS 17.0 以上の iPhone で使えます。iPad 向けの画面は用意していません。
+       Android 版はありません。</p>
+
+    <h3>「ラボ」はどこにありますか</h3>
+    <p>設定の画面の右上に「ラボ」があります。6つの手の選び方を総当たりで戦わせて、順位表を出す画面です。
+       ふだん遊ぶのに必要なものではないので、入口はここだけにしてあります。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="tsushin">通信と、聞かれること</h2>
+
+    <h3>このアプリは通信をしますか。機内モードでも使えますか</h3>
+    <p>通信をしません。アプリの中に、外へつなぐ処理が1つも入っていません。
+       問題も解説も、アプリの中に入っているものを読んでいます。
+       ですから、機内モードのままでも、問題を解く・解説を読む・AIと話す・友達と同じスマホで遊ぶ、はそのまま動きます。</p>
+    <p>ただし、問題を友達に送るときは iPhone の共有の画面が開きます。
+       そこから先（メッセージやメールのアプリが送れるかどうか）は、そのアプリと回線の状態によります。</p>
+
+    <h3>AIと話せるのに、通信をしないのですか</h3>
+    <p>しません。「AIに反論する」の会話は、アプリの中にあらかじめ書いてある受け答えを、
+       押したボタンに合わせて出しています。「もっと簡単に」「逆の立場なら？」「この考え方の弱点は？」などの
+       ボタンで進みます。文字を打ち込む欄はありません。書いた内容が外へ送られることもありません。</p>
+
+    <h3>会員登録やログインは要りますか</h3>
+    <p>要りません。メールアドレスも電話番号もパスワードも聞きません。
+       アプリを開いたら、その場ですぐ遊べます。</p>
+
+    <h3>名前や学校名を聞かれますか</h3>
+    <p>聞きません。アプリの設定の画面にも、そのまま書いてあります。
+       「このアプリは、氏名・学校名・電話番号・住所・顔写真を集めません。」</p>
+    <p>名前を書く欄は2か所だけあります。シェア画像に入れるニックネームと、
+       同じスマホで対戦するときの2人の名前です。どちらも書かなくても遊べます。
+       画面にも「本名は書かないでね。」と出ます。書いた名前は、このスマホの中だけに残ります。</p>
+
+    <h3>カメラや写真、位置情報を使いますか</h3>
+    <p>使いません。アプリが iPhone に許可を求めるのは<strong>通知だけ</strong>で、
+       それも設定で自分からオンにしたときだけです。</p>
+
+    <h3>設定の「使い方の記録」は何ですか</h3>
+    <p>どの画面を開いたかを、この端末のログにだけ書く仕組みです。外へは送っていません。
+       オフにすると書かなくなります。アプリの中の文言と同じです。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="suji">画面に出る数字の見かた</h2>
+
+    <h3>「割合」は、だれの答えの割合ですか</h3>
+    <p><strong>このスマホで実際に起きた回答だけ</strong>の割合です。
+       自分が答えたぶん、同じスマホで友達が答えたぶん、
+       「ともだち」タブで「答えが返ってきた」を押して記録したぶんが入ります。</p>
+    <p>ほかの人の集計は入っていません。全国の集計もありません。
+       数字のそばには、必ず「このスマホでの回答」と、もとになった件数が出ます。</p>
+    <p>同じ問題に<strong>4件たまるまで、割合は出ません</strong>。
+       それまでは「このスマホでの回答 ◯件」と、あと何件で出るかだけが出ます。
+       少ない数から割合を作らないためです。</p>
+
+    <h3>「傾向」や「思考タイプ」が出ません</h3>
+    <p>出るまでに必要な数が決まっています。まとめると、次のとおりです。</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">出るもの</th><th scope="col">出るところ</th><th scope="col">出るまでに必要なもの</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>答えの割れ方（割合）</td><td>結果の画面 ／ ともだち</td><td>同じ問題に、このスマホで4件</td></tr>
+          <tr><td>選び方の傾向（割合）</td><td>じぶん</td><td>答えた数が5問</td></tr>
+          <tr><td>思考タイプ</td><td>じぶん</td><td>答えた数が8問</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>足りないあいだは、数字の代わりに「まだ数字は出せません」と出ます。
+       すぐに自分のタイプが出るわけではありません。</p>
+
+    <h3>「思考タイプ」は、あなたを言い当てるものですか</h3>
+    <p>ちがいます。アプリの画面にも、次の注記が必ず付いています。</p>
+    <p>「これは心理学的・医学的な診断ではありません。このアプリでの選び方から作った、ゲーム上のタイプです。」</p>
+    <p>もとにしているのは、このアプリで選んだ選択肢だけです。10種類のうちのどれかに当てはめて表示しますが、
+       人がらを決めるものではありません。</p>
+
+    <h3>「あなたの矛盾」は、責められているのですか</h3>
+    <p>ちがいます。ちがう問題で自分の答えがすれ違ったところを、そのまま並べて見せているだけです。
+       画面にも「まちがいじゃない。」「どっちが本当か、決めなくていい。」と書いてあります。
+       どちらが正しいかは出しません。</p>
+
+    <h3>正解はありますか</h3>
+    <p><span class="cat">Logic</span>（ろんり）の問題だけ、正解があります。
+       ほかの4つの種類 ――
+       <span class="cat">Game Theory</span>（かけひき）・
+       <span class="cat">Paradox</span>（パラドックス）・
+       <span class="cat">Psychology</span>（こころ）・
+       <span class="cat">Ethics</span>（えらび方） ―― では、
+       正しい・まちがいの判定を出しません。問題の画面にも、その問題の答えの性質
+       （「答えがあります」「答えが揺れます」「考え方が分かれます」など）が先に出ます。</p>
+
+    <h3>バッジは、人と競うものですか</h3>
+    <p>ちがいます。バッジは24種類あって、解いた数や選び方から自動で付きます。
+       画面にも「だれかと競うためのものではありません。」と書いてあります。
+       ランキングはありません。ほかの人と番号で比べることもしません。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="tomodachi">友達との遊びかた</h2>
+    <p>遊びかたは2通りです。どちらも、このスマホの中で完結します。</p>
+
+    <h3>1. 問題を送って、答えを聞く</h3>
+    <p>「今日」や「ともだち」の画面にある「友達を試す」を押すと、iPhone の共有の画面が開きます。
+       送るのは<strong>問題だけ</strong>で、あなたの答えは入りません。何人にでも送れます。</p>
+    <p>答えが返ってきたら、「ともだち」タブの「答えが返ってきた」を押します。
+       選択肢が並ぶので、聞いた答えのぶんだけ押してください。押したぶんが、このスマホの集計に入ります。
+       押したあとで取り消すことはできません。</p>
+
+    <h3>2. 同じスマホを渡して、2人で順番に答える</h3>
+    <p>「ともだち」の「このスマホを渡して遊ぶ」から始めます。
+       名前（書かなくてもかまいません・16文字まで）、問題数（1問・3問・5問から）、
+       問題の種類を選びます。先に答えた人の選択は隠れていて、2人とも答えたところで同時に開きます。</p>
+
+    <h3>離れた友達と、オンラインで対戦できますか</h3>
+    <p>できません。オンラインで対戦する機能はありません。アプリの画面にも、そのまま書いてあります。
+       いまは、同じスマホを渡すか、問題を送って答えを聞く形で遊べます。</p>
+
+    <h3>送ったリンクを友達が押しても、何も開きません</h3>
+    <p>リンクが開くのは、<strong>「矛盾。」を入れている iPhone だけ</strong>です。
+       アプリを入れていない人が押しても、何も起きません。
+       アプリを入れていない友達には、リンクではなく問題の文そのものを見せてください。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="tsuchi">通知のこと</h2>
+
+    <h3>通知を止めたい</h3>
+    <p>設定 →「通知」→「今日の問題のお知らせ」のスイッチをオフにしてください。
+       オフにした時点で、予約されていたお知らせはその場で全部取り消されます。</p>
+
+    <h3>通知が来ません</h3>
+    <p>まず、設定 →「通知」の「今日の問題のお知らせ」がオンになっているか見てください。
+       はじめの状態ではオフです。自分でオンにしたときに初めて、iPhone の許可の画面が出ます。</p>
+    <p>iPhone 本体の側で「矛盾。」の通知が切られていると、オンにできません。
+       そのときは、アプリの画面に理由が出て、「iPhoneの設定を開く」ボタンが出ます。そこから許可してください。</p>
+
+    <h3>どんな通知が、どれだけ来ますか</h3>
+    <p>毎日18:00に1本だけです。それ以上は送りません。何度オンにしても増えません。音は鳴りません。
+       文面は「矛盾。」「今日の問題、これ友達とやったら絶対答え割れる。」の1種類です。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="data">記録の置き場所と、消しかた</h2>
+
+    <h3>答えた記録は、どこにありますか</h3>
+    <p>このスマホの中だけです。答えた記録・XP・連続日数・バッジ・お気に入り・
+       友達との対戦の記録・見つかった食い違いが、この端末に保存されます。
+       開発者のサーバーはありません。開発者が、あなたの記録を受け取ることはありません。</p>
+
+    <h3>保存したものを全部消したい</h3>
+    <p>設定 →「データ」→ 赤いボタン<strong>「このスマホのデータを全部消す」</strong>を押します。
+       確認の画面が出るので、「全部消す」を選んでください。</p>
+    <p>消えるのは、答えた記録・XP・連続日数・バッジ・お気に入り・友達との対戦の記録です。
+       答えの割れ方の集計も消えます。予約されていた通知も、このとき取り消されます。
+       <strong>もとには戻せません。</strong></p>
+    <p>アプリ自体を削除したときも、保存されているものは一緒に消えます。</p>
+
+    <h3>機種変更をすると、記録は移りますか</h3>
+    <p>アプリには、記録を別の iPhone へ移す機能がありません。
+       アカウントもサーバーもないので、アプリが記録をどこかへ送って預けておくこともありません。</p>
+    <p>iPhone 本体のバックアップから新しい iPhone を復元したときにどうなるかは、
+       実機で確かめていません。ここは「移ります」とも「移りません」とも書けないところです。
+       確実に残しておきたい結果があるときは、その画面の共有からシェア画像を作って、
+       写真として手元に残しておくのが確かです。</p>
+
+    <h3>シェア画像に、名前は出ますか</h3>
+    <p>はじめの状態では出ません。設定の「シェア画像にニックネームを入れる」をオンにして、
+       かつニックネームを書いているときだけ、画像にその名前が入ります。</p>
+    <p>友達に問題を送るときのカードには、送る側の答えは入りません。
+       同じスマホで対戦した結果を共有するときも、入力した2人の名前は画像に出ません。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="okane">広告と購入のこと</h2>
+    <p>アプリの中に購入はありません。広告も出ません。会員登録もありません。
+       外部の会社の分析の仕組みも入れていません。</p>
+    <p>「購入したものを復元する」のような手順もありません。買うものがないためです。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="mondai">問題の中身について</h2>
+
+    <h3>問題の内容が間違っている気がします</h3>
+    <p>教えてください。100問すべてに出どころ（出典）を付けてあり、解説の画面の下に出しています。
+       出典と見くらべたうえで、おかしいところがあれば直します。</p>
+    <p>お知らせいただくときは、<strong>問題のID</strong>（たとえば GT-001）を書き添えてください。
+       IDは、問題の画面の左上、種類の名前の右に小さく出ています。</p>
+
+    <h3>問題を追加してほしい</h3>
+    <p>ご希望はメールで受け付けています。いまは全部で100問で、5つの種類に20問ずつ入っています。
+       いただいた内容は読みますが、すべてを入れられるとはかぎりません。追加の予定日もお約束できません。</p>
+
+    <h3>同じ問題をもう一度解けますか</h3>
+    <p>解けます。答えた問題も、何度でも開けます。何回目かは画面に出ます。
+       前に答えたときと答えが変わったときも、その記録が「じぶん」の履歴に残ります。</p>
+
+    <h3>「今日の問題」は変えられますか</h3>
+    <p>その日のあいだは、答えたあとも同じ問題のままです。日づけが変わると新しい1問になります。
+       曜日ごとに出る種類が決まっていて、土曜と日曜は種類を決めずに選んでいます。
+       ほかの問題を解きたいときは、「あそぶ」から選んでください。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="fuguai">うまく動かないときの知らせかた</h2>
+    <p>下のメールに、次の4つを書いて送ってください。原因を探すのが早くなります。</p>
+    <ul>
+      <li><strong>iPhone の機種</strong>（たとえば iPhone 15）</li>
+      <li><strong>iOS のバージョン</strong>（iPhone の「設定」→「一般」→「情報」→「iOSバージョン」に出ています）</li>
+      <li><strong>アプリのバージョン</strong>（アプリの設定 →「このアプリについて」→「バージョン」に出ています）</li>
+      <li><strong>問題のID</strong>（特定の問題で起きるときだけ。問題の画面の左上に出ています）</li>
+    </ul>
+    <p>そのうえで、「どの画面で」「何を押したら」「どうなったか」を書いていただけると助かります。
+       うまく動かない画面の写真を添えていただいてもかまいません。</p>
+    <a class="mailbtn" href="mailto:nosunosukawa@gmail.com">nosunosukawa@gmail.com</a>
+  </div>
+
+  <div class="card">
+    <h2 id="toiawase">お問い合わせ</h2>
+    <p>このページで解決しないことは、メールでお知らせください。
+       個人で作っています。いただいたメールは全部読みます。
+       お返事に数日いただくことがあります。</p>
+    <a class="mailbtn" href="mailto:nosunosukawa@gmail.com">nosunosukawa@gmail.com</a>
+    <p class="note">お送りいただいたメールアドレスと本文は、お返事のためだけに使います。
+       答えた記録がこちらに届くことはありません。</p>
+  </div>
+
+  <div class="card">
+    <h2 id="hogosha">保護者の方へ</h2>
+    <p>このアプリは、正解が1つに決まらない問題について、選んで、考えて、友達と話すためのものです。
+       中高生の方が使うことを考えて作っています。</p>
+
+    <h3>個人を特定するものを集めません</h3>
+    <ul>
+      <li>会員登録もログインもありません。メールアドレスも電話番号も聞きません。</li>
+      <li>氏名・学校名・電話番号・住所・顔写真を集めません。</li>
+      <li>アプリは通信をしません。答えた記録は、このスマホの中だけに残ります。</li>
+      <li>広告は出ません。アプリの中に購入もありません。</li>
+      <li>名前を書く欄では、画面に「本名は書かないでね。」と出ます。書かなくても遊べます。</li>
+      <li>保存されているものは、設定の「このスマホのデータを全部消す」で、まとめて消せます。</li>
+    </ul>
+
+    <h3>数値で人を格づけしません</h3>
+    <p>このアプリは、頭のはたらきを点数にしたり、順位を付けたりしません。ランキングもありません。
+       バッジは、解いた数や選び方から自動で付くもので、画面にも
+       「だれかと競うためのものではありません。」と書いてあります。</p>
+    <p>「思考タイプ」には、次の注記が必ず付きます。
+       「これは心理学的・医学的な診断ではありません。このアプリでの選び方から作った、ゲーム上のタイプです。」</p>
+    <p>画面に出る割合も、このスマホで実際に起きた回答だけから作っています。
+       ほかの人と比べた数字ではありません。</p>
+
+    <h3>通知は、はじめの状態ではオフです</h3>
+    <p>お子さん自身が設定でオンにしたときに初めて、iPhone の許可の画面が出ます。
+       届くのは毎日18:00の1本だけで、音は鳴りません。設定でいつでもオフにできます。</p>
+
+    <p class="note">くわしい取り扱いは<a href="privacy.html">プライバシーポリシー</a>に書いてあります。
+       ご不明な点は、上のメールにお問い合わせください。</p>
+  </div>
+
+  <footer>
+    矛盾<span class="dot">。</span> ／ © 2026 川﨑信隆<br>
+    <a href="index.html">最初のページ</a> ·
+    <a href="privacy.html">プライバシー</a> ·
+    <a href="mailto:nosunosukawa@gmail.com">nosunosukawa@gmail.com</a>
+  </footer>
+
+</main>
+
+</body>
+</html>
