@@ -140,9 +140,13 @@
   figcaption{margin-top:12px;font-size:15px;line-height:1.8;color:var(--ink-mut)}
 
   /* ---- 押せない告知。ボタンの形にしない（押しても何も起きないものは置かない） ---- */
-  .soon{margin-top:20px;padding:16px var(--gutter);border-radius:var(--r-small);
-    border:1px dashed var(--line-strong);background:var(--paper-lift);
-    color:var(--ink-mut);font-weight:700;text-align:center}
+  /* [2026-09-20] 公開されたので「まもなく」の点線の箱を、押せる導線に変えた。
+     ここが死んでいると、友達から送られて来た人が落とす先を見失う（§97 の口コミ導線）。 */
+  .getit{display:flex;align-items:center;justify-content:center;gap:10px;
+    margin-top:20px;min-height:60px;padding:16px var(--gutter);border-radius:var(--r-btn);
+    background:var(--accent);color:#0A0A0C;font-weight:800;font-size:18px;text-decoration:none}
+  .getit:hover{text-decoration:none;filter:brightness(1.06)}
+  .getit-note{margin-top:10px;text-align:center;font-size:15px;color:var(--ink-mut)}
 
   /* ---- このアプリがしないこと ---- */
   .notice{border:2px solid var(--accent);background:var(--accent-soft);border-radius:var(--r-card);
@@ -187,7 +191,8 @@
     <h1>矛盾<span class="dot">。</span><br>正解のない選択で友達と答えが割れる思考ゲーム</h1>
     <p class="lead">正解のない問題に、直感で答えるだけ。<br>答えたあとに「え、そうなるの？」があります。</p>
     <p class="date">最終更新（この版の適用日）: 2026年9月18日</p>
-    <p class="soon">iPhone のアプリです。まもなく App Store で公開します</p>
+    <a class="getit" href="https://apps.apple.com/jp/app/id6813461761">App Store でダウンロード</a>
+    <p class="getit-note">iPhone・iOS 17 以降／無料／アプリ内課金なし</p>
   </header>
 
   <div class="card">
